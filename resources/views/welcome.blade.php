@@ -6,7 +6,7 @@
 
         <title>InstantSearch.js Storefront</title>
 
-        @vite(['resources/js/app.js'])
+        @vite('resources/js/app.js')
     </head>
     <body>
         <div class="container">
