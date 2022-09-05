@@ -1,0 +1,8 @@
+.mobile-filters-menu {
+    @apply hidden;
+
+    &--visible {
+        @apply flex;
+    }
+}
+

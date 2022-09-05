@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.mobile-menu {
+    @apply hidden;
+
+    &--visible {
+        @apply flex;
+    }
+}
