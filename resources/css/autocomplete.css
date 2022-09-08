@@ -1,0 +1,51 @@
+
+.aa-Autocomplete, .aa-Detached {
+    .aa-Input::-webkit-search-cancel-button {
+        appearance: none;
+    }
+}
+
+.aa-Panel mark {
+    @apply bg-transparent font-semibold;
+}
+
+.aa-Detached {
+    @apply overflow-hidden;
+}
+
+.aa-Item {
+    @apply cursor-pointer;
+
+    &[aria-selected="true"] {
+        @apply bg-gray-100;
+    }
+
+    .aa-ItemWrapper {
+        @apply flex items-stretch justify-between hover:bg-gray-100 aria-selected:bg-gray-100 transition-colors;
+    }
+
+    .aa-ItemContent {
+        @apply flex items-center;
+    }
+
+    .aa-ItemIcon {
+        @apply text-gray-400 py-3 lg:py-2.5 pl-5 lg:pl-3 pr-3 lg:pr-2 flex items-center justify-center;
+
+        svg {
+            @apply w-5 h-5 stroke-2;
+        }
+
+    }
+
+    .aa-ItemActions {
+        @apply flex mr-1.5;
+    }
+
+    .aa-ItemActionButton {
+        @apply flex-none text-gray-400/80 transition-colors hover:text-gray-600/80 p-1.5 flex items-center justify-center;
+
+        svg {
+            @apply w-5 h-5 stroke-2;
+        }
+    }
+}

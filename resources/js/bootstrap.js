@@ -1,6 +1,7 @@
 import _ from "lodash";
 import axios from "axios";
 
+import { createAutocomplete } from "./autocomplete";
 import { handleMobileMenu } from "./utils";
 
 window._ = _;
@@ -15,3 +16,6 @@ window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
 /** Mobile menu */
 handleMobileMenu(".mobile-menu");
+
+/** Autocomplete */
+createAutocomplete("#autocomplete");

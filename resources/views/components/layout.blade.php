@@ -16,29 +16,8 @@
             Off-canvas menu for mobile, show/hide based on off-canvas menu state.
         -->
         <div class="mobile-menu relative z-40 lg:hidden" role="dialog" aria-modal="true">
-            <!--
-            Off-canvas menu backdrop, show/hide based on off-canvas menu state.
-
-            Entering: "transition-opacity ease-linear duration-300"
-                From: "opacity-0"
-                To: "opacity-100"
-            Leaving: "transition-opacity ease-linear duration-300"
-                From: "opacity-100"
-                To: "opacity-0"
-            -->
             <div class="fixed inset-0 bg-black bg-opacity-25"></div>
-
             <div class="fixed inset-0 z-40 flex">
-            <!--
-                Off-canvas menu, show/hide based on off-canvas menu state.
-
-                Entering: "transition ease-in-out duration-300 transform"
-                From: "-translate-x-full"
-                To: "translate-x-0"
-                Leaving: "transition ease-in-out duration-300 transform"
-                From: "translate-x-0"
-                To: "-translate-x-full"
-            -->
             <div class="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl">
                 <div class="flex px-4 pt-5 pb-2">
                 <button type="button" class="mobile-menu-close-trigger -m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400">
@@ -254,44 +233,46 @@
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div class="flex h-16 items-center justify-between">
                     <!-- Logo (lg+) -->
-                    <div class="hidden lg:flex lg:flex-1 lg:items-center">
-                    <a href="{{ url('/') }}">
-                        <span class="sr-only">Your Company</span>
-                        <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="">
-                    </a>
-                    </div>
+                    <div class="hidden h-full lg:flex lg:items-center">
+                        <div class="hidden lg:flex lg:flex-1 lg:items-center mr-4">
+                        <a href="{{ url('/') }}">
+                            <span class="sr-only">Your Company</span>
+                            <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="">
+                        </a>
+                        </div>
 
-                    <div class="hidden h-full lg:flex">
-                    <!-- Flyout menus -->
-                    <div class="inset-x-0 bottom-0 px-4">
-                        <div class="flex h-full justify-center space-x-8">
-                        <div class="flex">
-                            <div class="relative flex">
-                            <!-- Item active: "text-indigo-600", Item inactive: "text-gray-700 hover:text-gray-800" -->
-                            <button type="button" class="text-gray-700 hover:text-gray-800 relative flex items-center justify-center text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">
-                                Women
-                                <!-- Open: "bg-indigo-600", Closed: "" -->
-                                <span class="absolute inset-x-0 -bottom-px z-20 h-0.5 transition duration-200 ease-out" aria-hidden="true"></span>
-                            </button>
+                        <div class="hidden h-full lg:flex">
+                        <!-- Flyout menus -->
+                        <div class="inset-x-0 bottom-0 px-4">
+                            <div class="flex h-full justify-center space-x-8">
+                            <div class="flex">
+                                <div class="relative flex">
+                                <!-- Item active: "text-indigo-600", Item inactive: "text-gray-700 hover:text-gray-800" -->
+                                <button type="button" class="text-gray-700 hover:text-gray-800 relative flex items-center justify-center text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">
+                                    Women
+                                    <!-- Open: "bg-indigo-600", Closed: "" -->
+                                    <span class="absolute inset-x-0 -bottom-px z-20 h-0.5 transition duration-200 ease-out" aria-hidden="true"></span>
+                                </button>
+                                </div>
+                            </div>
+
+                            <div class="flex">
+                                <div class="relative flex">
+                                <!-- Item active: "text-indigo-600", Item inactive: "text-gray-700 hover:text-gray-800" -->
+                                <button type="button" class="text-gray-700 hover:text-gray-800 relative flex items-center justify-center text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">
+                                    Men
+                                    <!-- Open: "bg-indigo-600", Closed: "" -->
+                                    <span class="absolute inset-x-0 -bottom-px z-20 h-0.5 transition duration-200 ease-out" aria-hidden="true"></span>
+                                </button>
+                                </div>
+                            </div>
+
+                            <a href="#" class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Company</a>
+
+                            <a href="#" class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Stores</a>
                             </div>
                         </div>
-
-                        <div class="flex">
-                            <div class="relative flex">
-                            <!-- Item active: "text-indigo-600", Item inactive: "text-gray-700 hover:text-gray-800" -->
-                            <button type="button" class="text-gray-700 hover:text-gray-800 relative flex items-center justify-center text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false">
-                                Men
-                                <!-- Open: "bg-indigo-600", Closed: "" -->
-                                <span class="absolute inset-x-0 -bottom-px z-20 h-0.5 transition duration-200 ease-out" aria-hidden="true"></span>
-                            </button>
-                            </div>
                         </div>
-
-                        <a href="#" class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Company</a>
-
-                        <a href="#" class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Stores</a>
-                        </div>
-                    </div>
                     </div>
 
                     <!-- Mobile menu and search (lg-) -->
@@ -304,15 +285,6 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                         </svg>
                     </button>
-
-                    <!-- Search -->
-                    <a href="{{ url('/search') }}" class="ml-2 p-2 text-gray-400 hover:text-gray-500">
-                        <span class="sr-only">Search</span>
-                        <!-- Heroicon name: outline/magnifying-glass -->
-                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                        </svg>
-                    </a>
                     </div>
 
                     <!-- Logo (lg-) -->
@@ -322,21 +294,11 @@
                     </a>
 
                     <div class="flex flex-1 items-center justify-end">
-                    <a href="{{ url('/search') }}" class="hidden text-sm font-medium text-gray-700 hover:text-gray-800 lg:block">Search</a>
+                    <div id="autocomplete" class="lg:w-4/6"></div>
 
-                    <div class="flex items-center lg:ml-8">
-                        <!-- Help -->
-                        <a href="#" class="p-2 text-gray-400 hover:text-gray-500 lg:hidden">
-                        <span class="sr-only">Help</span>
-                        <!-- Heroicon name: outline/question-mark-circle -->
-                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
-                        </svg>
-                        </a>
-                        <a href="#" class="hidden text-sm font-medium text-gray-700 hover:text-gray-800 lg:block">Help</a>
-
+                    <div class="flex items-center ml-4 lg:ml-8">
                         <!-- Cart -->
-                        <div class="ml-4 flow-root lg:ml-8">
+                        <div class="flow-root">
                         <a href="#" class="group -m-2 flex items-center p-2">
                             <!-- Heroicon name: outline/shopping-bag -->
                             <svg class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
