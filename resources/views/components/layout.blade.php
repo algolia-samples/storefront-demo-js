@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title ?? 'InstantSearch.js Storefront' }}</title>
+    <title>{{ $title ?? 'Algolia Storefront' }}</title>
     @vite(['resources/css/bootstrap.css', 'resources/js/bootstrap.js'])
     @stack('scripts')
 </head>
@@ -236,7 +236,7 @@
                     <div class="hidden h-full lg:flex lg:items-center">
                         <div class="hidden lg:flex lg:flex-1 lg:items-center mr-4">
                         <a href="{{ url('/') }}">
-                            <span class="sr-only">Your Company</span>
+                            <span class="sr-only">Algolia Storefront</span>
                             <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="">
                         </a>
                         </div>
@@ -289,7 +289,7 @@
 
                     <!-- Logo (lg-) -->
                     <a href="{{ url('/') }}" class="lg:hidden">
-                    <span class="sr-only">Your Company</span>
+                    <span class="sr-only">Algolia Storefront</span>
                     <img src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" class="h-8 w-auto">
                     </a>
 
@@ -492,7 +492,7 @@
             </div>
 
             <div class="border-t border-gray-100 py-10 text-center">
-                <p class="text-sm text-gray-500">&copy; 2021 Your Company, Inc. All rights reserved.</p>
+                <p class="text-sm text-gray-500">&copy; 2022 Algolia Storefront, Inc. All rights reserved.</p>
             </div>
             </div>
         </footer>
