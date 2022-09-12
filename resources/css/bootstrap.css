@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 .mobile-menu {
-    @apply hidden;
+  @apply hidden;
 
-    &--visible {
-        @apply flex;
-    }
+  &--visible {
+    @apply flex;
+  }
 }
