@@ -21,6 +21,6 @@
         "@algolia/autocomplete-plugin-recent-searches": "^1.7.1",
         "algoliasearch": "^4.14.2",
         "instantsearch.css": "^7.4.5",
-        "instantsearch.js": "^4.44.0"
+        "instantsearch.js": "^4.46.0"
     }
 }
