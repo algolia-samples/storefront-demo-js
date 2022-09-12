@@ -9,3 +9,18 @@
     @apply flex;
   }
 }
+
+.aa-Autocomplete,
+.aa-Detached {
+  .aa-Input::-webkit-search-cancel-button {
+    appearance: none;
+  }
+}
+
+.aa-Panel mark {
+  @apply bg-transparent font-semibold;
+}
+
+.aa-Detached {
+  @apply overflow-hidden;
+}
