@@ -12,10 +12,6 @@
 
 <body>
   <div class="bg-white">
-    <!--
-      Mobile menu
-      Off-canvas menu for mobile, show/hide based on off-canvas menu state.
-    -->
     <div class="mobile-menu relative z-40 lg:hidden" role="dialog" aria-modal="true">
       <div class="fixed inset-0 bg-black bg-opacity-25"></div>
       <div class="fixed inset-0 z-40 flex">
@@ -32,23 +28,19 @@
             </button>
           </div>
 
-          <!-- Links -->
           <div class="mt-2">
             <div class="border-b border-gray-200">
               <div class="-mb-px flex space-x-8 px-4" aria-orientation="horizontal" role="tablist">
-                <!-- Selected: "text-indigo-600 border-indigo-600", Not Selected: "text-gray-900 border-transparent" -->
                 <button id="tabs-1-tab-1"
                   class="text-gray-900 border-transparent flex-1 whitespace-nowrap border-b-2 py-4 px-1 text-base font-medium"
                   aria-controls="tabs-1-panel-1" role="tab" type="button">Women</button>
 
-                <!-- Selected: "text-indigo-600 border-indigo-600", Not Selected: "text-gray-900 border-transparent" -->
                 <button id="tabs-1-tab-2"
                   class="text-gray-900 border-transparent flex-1 whitespace-nowrap border-b-2 py-4 px-1 text-base font-medium"
                   aria-controls="tabs-1-panel-2" role="tab" type="button">Men</button>
               </div>
             </div>
 
-            <!-- 'Women' tab panel, show/hide based on tab state. -->
             <div id="tabs-1-panel-1" class="space-y-12 px-4 py-6" aria-labelledby="tabs-1-tab-1" role="tabpanel"
               tabindex="0">
               <div class="grid grid-cols-2 gap-x-4 gap-y-10">
@@ -106,7 +98,6 @@
               </div>
             </div>
 
-            <!-- 'Men' tab panel, show/hide based on tab state. -->
             <div id="tabs-1-panel-2" class="space-y-12 px-4 py-6" aria-labelledby="tabs-1-tab-2" role="tabpanel"
               tabindex="0">
               <div class="grid grid-cols-2 gap-x-4 gap-y-10">
@@ -173,101 +164,15 @@
               <a href="#" class="-m-2 block p-2 font-medium text-gray-900">Stores</a>
             </div>
           </div>
-
-          <div class="space-y-6 border-t border-gray-200 py-6 px-4">
-            <div class="flow-root">
-              <a href="#" class="-m-2 block p-2 font-medium text-gray-900">Create an account</a>
-            </div>
-            <div class="flow-root">
-              <a href="#" class="-m-2 block p-2 font-medium text-gray-900">Sign in</a>
-            </div>
-          </div>
-
-          <div class="space-y-6 border-t border-gray-200 py-6 px-4">
-            <!-- Currency selector -->
-            <form>
-              <div class="inline-block">
-                <label for="mobile-currency" class="sr-only">Currency</label>
-                <div
-                  class="group relative -ml-2 rounded-md border-transparent focus-within:ring-2 focus-within:ring-white">
-                  <select id="mobile-currency" name="currency"
-                    class="flex items-center rounded-md border-transparent bg-none py-0.5 pl-2 pr-5 text-sm font-medium text-gray-700 focus:border-transparent focus:outline-none focus:ring-0 group-hover:text-gray-800">
-                    <option>CAD</option>
-
-                    <option>USD</option>
-
-                    <option>AUD</option>
-
-                    <option>EUR</option>
-
-                    <option>GBP</option>
-                  </select>
-                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center">
-                    <!-- Heroicon name: mini/chevron-down -->
-                    <svg class="h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                      fill="currentColor" aria-hidden="true">
-                      <path fill-rule="evenodd"
-                        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                        clip-rule="evenodd" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
         </div>
       </div>
     </div>
 
     <header class="relative">
       <nav aria-label="Top">
-        <!-- Top navigation -->
-        <div class="bg-gray-900">
-          <div class="mx-auto flex h-10 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-            <!-- Currency selector -->
-            <form>
-              <div>
-                <label for="desktop-currency" class="sr-only">Currency</label>
-                <div
-                  class="group relative -ml-2 rounded-md border-transparent bg-gray-900 focus-within:ring-2 focus-within:ring-white">
-                  <select id="desktop-currency" name="currency"
-                    class="flex items-center rounded-md border-transparent bg-gray-900 bg-none py-0.5 pl-2 pr-5 text-sm font-medium text-white focus:border-transparent focus:outline-none focus:ring-0 group-hover:text-gray-100">
-                    <option>CAD</option>
-
-                    <option>USD</option>
-
-                    <option>AUD</option>
-
-                    <option>EUR</option>
-
-                    <option>GBP</option>
-                  </select>
-                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center">
-                    <!-- Heroicon name: mini/chevron-down -->
-                    <svg class="h-5 w-5 text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                      fill="currentColor" aria-hidden="true">
-                      <path fill-rule="evenodd"
-                        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                        clip-rule="evenodd" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </form>
-
-            <div class="flex items-center space-x-6">
-              <a href="#" class="text-sm font-medium text-white hover:text-gray-100">Sign in</a>
-              <a href="#" class="text-sm font-medium text-white hover:text-gray-100">Create an
-                account</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Secondary navigation -->
         <div class="bg-white">
           <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="flex h-16 items-center justify-between">
-              <!-- Logo (lg+) -->
               <div class="hidden h-full lg:flex lg:items-center">
                 <div class="hidden lg:flex lg:flex-1 lg:items-center mr-4">
                   <a href="{{ url('/') }}">
@@ -278,17 +183,14 @@
                 </div>
 
                 <div class="hidden h-full lg:flex">
-                  <!-- Flyout menus -->
                   <div class="inset-x-0 bottom-0 px-4">
                     <div class="flex h-full justify-center space-x-8">
                       <div class="flex">
                         <div class="relative flex">
-                          <!-- Item active: "text-indigo-600", Item inactive: "text-gray-700 hover:text-gray-800" -->
                           <button type="button"
                             class="text-gray-700 hover:text-gray-800 relative flex items-center justify-center text-sm font-medium transition-colors duration-200 ease-out"
                             aria-expanded="false">
                             Women
-                            <!-- Open: "bg-indigo-600", Closed: "" -->
                             <span class="absolute inset-x-0 -bottom-px z-20 h-0.5 transition duration-200 ease-out"
                               aria-hidden="true"></span>
                           </button>
@@ -297,12 +199,10 @@
 
                       <div class="flex">
                         <div class="relative flex">
-                          <!-- Item active: "text-indigo-600", Item inactive: "text-gray-700 hover:text-gray-800" -->
                           <button type="button"
                             class="text-gray-700 hover:text-gray-800 relative flex items-center justify-center text-sm font-medium transition-colors duration-200 ease-out"
                             aria-expanded="false">
                             Men
-                            <!-- Open: "bg-indigo-600", Closed: "" -->
                             <span class="absolute inset-x-0 -bottom-px z-20 h-0.5 transition duration-200 ease-out"
                               aria-hidden="true"></span>
                           </button>
@@ -319,9 +219,7 @@
                 </div>
               </div>
 
-              <!-- Mobile menu and search (lg-) -->
               <div class="flex flex-1 items-center lg:hidden">
-                <!-- Mobile menu toggle, controls the 'mobileMenuOpen' state. -->
                 <button type="button" class="mobile-menu-open-trigger -ml-2 rounded-md bg-white p-2 text-gray-400">
                   <span class="sr-only">Open menu</span>
                   <!-- Heroicon name: outline/bars-3 -->
@@ -333,7 +231,6 @@
                 </button>
               </div>
 
-              <!-- Logo (lg-) -->
               <a href="{{ url('/') }}" class="lg:hidden">
                 <span class="sr-only">Algolia Storefront</span>
                 <img src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt=""
@@ -344,7 +241,6 @@
                 <div id="autocomplete" class="lg:w-4/6"></div>
 
                 <div class="flex items-center ml-4 lg:ml-8">
-                  <!-- Cart -->
                   <div class="flow-root">
                     <a href="#" class="group -m-2 flex items-center p-2">
                       <!-- Heroicon name: outline/shopping-bag -->
@@ -439,13 +335,11 @@
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="border-t border-gray-200 py-20">
           <div class="grid grid-cols-1 md:grid-flow-col md:auto-rows-min md:grid-cols-12 md:gap-x-8 md:gap-y-16">
-            <!-- Image section -->
             <div class="col-span-1 md:col-span-2 lg:col-start-1 lg:row-start-1">
               <img src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt=""
                 class="h-8 w-auto">
             </div>
 
-            <!-- Sitemap sections -->
             <div
               class="col-span-6 mt-10 grid grid-cols-2 gap-8 sm:grid-cols-3 md:col-span-8 md:col-start-3 md:row-start-1 md:mt-0 lg:col-span-6 lg:col-start-2">
               <div class="grid grid-cols-1 gap-y-12 sm:col-span-2 sm:grid-cols-2 sm:gap-x-8">
@@ -538,7 +432,6 @@
               </div>
             </div>
 
-            <!-- Newsletter section -->
             <div
               class="mt-12 md:col-span-8 md:col-start-3 md:row-start-2 md:mt-0 lg:col-span-4 lg:col-start-9 lg:row-start-1">
               <h3 class="text-sm font-medium text-gray-900">Sign up for our newsletter</h3>
