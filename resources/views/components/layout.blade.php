@@ -2,12 +2,12 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ $title ?? 'InstantSearch.js Storefront' }}</title>
-  @vite(['resources/css/bootstrap.css', 'resources/js/bootstrap.js'])
-  @stack('scripts')
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $title ?? 'Algolia Storefront' }}</title>
+    @vite(['resources/css/bootstrap.css', 'resources/js/bootstrap.js'])
+    @stack('scripts')
 </head>
 
 <body>
@@ -263,19 +263,18 @@
           </div>
         </div>
 
-        <!-- Secondary navigation -->
-        <div class="bg-white">
-          <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="flex h-16 items-center justify-between">
-              <!-- Logo (lg+) -->
-              <div class="hidden h-full lg:flex lg:items-center">
-                <div class="hidden lg:flex lg:flex-1 lg:items-center mr-4">
-                  <a href="{{ url('/') }}">
-                    <span class="sr-only">Your Company</span>
-                    <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                      alt="">
-                  </a>
-                </div>
+            <!-- Secondary navigation -->
+            <div class="bg-white">
+                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="flex h-16 items-center justify-between">
+                    <!-- Logo (lg+) -->
+                    <div class="hidden h-full lg:flex lg:items-center">
+                        <div class="hidden lg:flex lg:flex-1 lg:items-center mr-4">
+                        <a href="{{ url('/') }}">
+                            <span class="sr-only">Algolia Storefront</span>
+                            <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="">
+                        </a>
+                        </div>
 
                 <div class="hidden h-full lg:flex">
                   <!-- Flyout menus -->
@@ -309,8 +308,11 @@
                         </div>
                       </div>
 
-                      <a href="#"
-                        class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Company</a>
+                    <!-- Logo (lg-) -->
+                    <a href="{{ url('/') }}" class="lg:hidden">
+                    <span class="sr-only">Algolia Storefront</span>
+                    <img src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" class="h-8 w-auto">
+                    </a>
 
                       <a href="#"
                         class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Stores</a>
@@ -558,12 +560,12 @@
           </div>
         </div>
 
-        <div class="border-t border-gray-100 py-10 text-center">
-          <p class="text-sm text-gray-500">&copy; 2021 Your Company, Inc. All rights reserved.</p>
-        </div>
-      </div>
-    </footer>
-  </div>
+            <div class="border-t border-gray-100 py-10 text-center">
+                <p class="text-sm text-gray-500">&copy; 2022 Algolia Storefront, Inc. All rights reserved.</p>
+            </div>
+            </div>
+        </footer>
+    </div>
 </body>
 
 </html>
