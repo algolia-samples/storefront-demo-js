@@ -63,7 +63,7 @@ $filters = array(
                 <!-- Expand/collapse section button -->
                 <button type="button"
                   class="flex w-full items-center justify-between p-2 text-gray-400 hover:text-gray-500"
-                  aria-controls="filter-section-0" aria-expanded="false">
+                  aria-controls="filter-section-{{ $loop->index }}" aria-expanded="false">
                   <span class="text-sm font-medium text-gray-900">{{ $filter['label'] }}</span>
                   <span class="ml-6 flex h-7 items-center">
                     <!--
@@ -82,7 +82,7 @@ $filters = array(
                   </span>
                 </button>
               </legend>
-              <div class="px-4 pt-4 pb-2">
+              <div class="px-4 pt-4 pb-2" id="filter-section-{{ $loop->index }}">
                 <div id="filter-mobile-{{ str_replace('.', '', $filter['attribute']) }}"></div>
               </div>
             </fieldset>
