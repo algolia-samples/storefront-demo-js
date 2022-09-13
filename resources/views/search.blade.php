@@ -12,34 +12,9 @@ $filters = array(
     @vite(['resources/css/search.css', 'resources/js/search.js'])
   @endpush
 
-  <!--
-    Mobile filter dialog
-    Off-canvas menu for mobile, show/hide based on off-canvas menu state.
-  -->
   <div class="mobile-filters-menu relative z-40 lg:hidden" role="dialog" aria-modal="true">
-    <!--
-      Off-canvas menu backdrop, show/hide based on off-canvas menu state.
-
-      Entering: "transition-opacity ease-linear duration-300"
-        From: "opacity-0"
-        To: "opacity-100"
-      Leaving: "transition-opacity ease-linear duration-300"
-        From: "opacity-100"
-        To: "opacity-0"
-    -->
     <div class="fixed inset-0 bg-black bg-opacity-25"></div>
-
     <div class="fixed inset-0 z-40 flex">
-      <!--
-        Off-canvas menu, show/hide based on off-canvas menu state.
-
-        Entering: "transition ease-in-out duration-300 transform"
-          From: "translate-x-full"
-          To: "translate-x-0"
-        Leaving: "transition ease-in-out duration-300 transform"
-          From: "translate-x-0"
-          To: "translate-x-full"
-      -->
       <div class="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-6 shadow-xl">
         <div class="flex items-center justify-between px-4">
           <h2 class="text-lg font-medium text-gray-900">Filters</h2>
@@ -54,25 +29,16 @@ $filters = array(
           </button>
         </div>
 
-        <!-- Filters -->
         <div class="mt-4">
           @foreach ($filters as $filter)
           <div class="border-t border-gray-200 pt-4 pb-4">
             <fieldset>
               <legend class="w-full px-2">
-                <!-- Expand/collapse section button -->
                 <button type="button"
                   class="flex w-full items-center justify-between p-2 text-gray-400 hover:text-gray-500"
                   aria-controls="filter-section-{{ $loop->index }}" aria-expanded="false">
                   <span class="text-sm font-medium text-gray-900">{{ $filter['label'] }}</span>
                   <span class="ml-6 flex h-7 items-center">
-                    <!--
-                      Expand/collapse icon, toggle classes based on section open state.
-
-                      Heroicon name: mini/chevron-down
-
-                      Open: "-rotate-180", Closed: "rotate-0"
-                    -->
                     <svg class="rotate-0 h-5 w-5 transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                       fill="currentColor" aria-hidden="true">
                       <path fill-rule="evenodd"
@@ -99,10 +65,6 @@ $filters = array(
         <li>
           <div class="flex items-center">
             <a href="{{ url('/search') }}" class="mr-4 text-sm font-medium text-gray-900">Search</a>
-            <!-- <svg viewBox="0 0 6 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
-              class="h-5 w-auto text-gray-300">
-              <path d="M4.878 4.34H3.551L.27 16.532h1.327l3.281-12.19z" fill="currentColor" />
-            </svg> -->
           </div>
         </li>
       </ol>
@@ -138,7 +100,6 @@ $filters = array(
       <aside>
         <h2 class="sr-only">Filters</h2>
 
-        <!-- Mobile filter dialog toggle, controls the 'mobileFilterDialogOpen' state. -->
         <button type="button" class="mobile-filters-menu-open-trigger inline-flex items-center lg:hidden">
           <span class="text-sm font-medium text-gray-700">Filters</span>
           <!-- Heroicon name: mini/plus -->
