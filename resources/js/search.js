@@ -2,6 +2,7 @@ import instantsearch from "instantsearch.js";
 import { singleIndex } from "instantsearch.js/es/lib/stateMappings";
 import { connectCurrentRefinements } from "instantsearch.js/es/connectors";
 import {
+  clearRefinements,
   configure,
   currentRefinements,
   infiniteHits,
@@ -136,6 +137,19 @@ search.addWidgets([
         "ml-1 inline-flex items-center w-4 h-4 flex-shrink-0 rounded-full p-1 hover:!bg-gray-200 text-xs text-gray-400 hover:text-gray-500",
     },
   }),
+  // Clear refinements
+  clearRefinements({
+    container: "#clear-refinements",
+    templates: {
+      resetLabel: "Clear all",
+    },
+    cssClasses: {
+      root: "sm:px-3",
+      button:
+        "block text-sm text-gray-500 hover:text-gray-800 px-7 py-3 sm:px-6 sm:py-0 sm:border-r sm:border-gray-300",
+      disabledButton: "hidden",
+    },
+  }),
   // Sort by
   sortBy({
     container: "#sortby",
@@ -164,6 +178,16 @@ search.addWidgets([
     container: "#products",
     showPrevious: true,
     templates: {
+      empty({ query }, { html }) {
+        return html`<div class="text-center space-y-2">
+          <p class="font-medium text-lg">
+            We didn't find a match for « ${query} »
+          </p>
+          <p class="text-sm text-gray-500">
+            Try searching for something else instead
+          </p>
+        </div>`;
+      },
       item(hit, { html, components }) {
         return html`<div class="group">
           <div

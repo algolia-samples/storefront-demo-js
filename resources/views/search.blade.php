@@ -127,7 +127,8 @@ $filters = array(
         </h3>
         <div aria-hidden="true" class="hidden h-5 w-px bg-gray-300 sm:ml-4 sm:block"></div>
         <div id="no-filters-label" class="sm:mt-0.5 sm:h-16 flex items-center"></div>
-        <div id="current-refinements"></div>
+        <div id="current-refinements" class="flex-grow"></div>
+        <div id="clear-refinements" class="flex-shrink-0"></div>
       </div>
     </div>
   </div>
