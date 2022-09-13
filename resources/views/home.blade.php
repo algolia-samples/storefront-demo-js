@@ -81,33 +81,16 @@ $mock = json_decode(Storage::get('mock.json'), true);
     <div class="mx-auto max-w-7xl py-24 px-4 sm:px-6 sm:py-32 lg:px-8 lg:pt-32">
       <div class="md:flex md:items-center md:justify-between">
         <h2 id="favorites-heading" class="text-2xl font-bold tracking-tight text-gray-900">Trending Products</h2>
-        <a href="#" class="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 md:block">
+        <a href="{{ url('/search') }}" class="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 md:block">
           Browse now
           <span aria-hidden="true"> &rarr;</span>
         </a>
       </div>
 
-      <div class="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-0 lg:gap-x-8">
-        @foreach ($mock['home']['trendingProducts'] as $trending)
-          <div class="group relative">
-            <div class="h-56 w-full overflow-hidden rounded-md group-hover:opacity-75 lg:h-72 xl:h-80">
-              <img src="{{ $trending['imageSrc'] }}" alt="{{ $trending['imageAlt'] }}"
-                class="h-full w-full object-cover object-center">
-            </div>
-            <h3 class="mt-4 text-sm text-gray-700">
-              <a href="{{ $trending['href'] }}">
-                <span class="absolute inset-0"></span>
-                {{ $trending['name'] }}
-              </a>
-            </h3>
-            <p class="mt-1 text-sm text-gray-500">{{ $trending['color'] }}</p>
-            <p class="mt-1 text-sm font-medium text-gray-900">{{ $trending['price'] }}</p>
-          </div>
-        @endforeach
-      </div>
+      <div id="trending-products" class="mt-6"></div>
 
       <div class="mt-8 text-sm md:hidden">
-        <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">
+        <a href="{{ url('/search') }}" class="font-medium text-indigo-600 hover:text-indigo-500">
           Browse now
           <span aria-hidden="true"> &rarr;</span>
         </a>
