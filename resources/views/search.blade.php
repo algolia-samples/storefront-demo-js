@@ -1,9 +1,9 @@
 <?php
 $filters = array(
-  array( 'label' => 'Brand', 'attribute' => 'brand'),
-  array( 'label' => 'Color', 'attribute' => 'color.original_name'),
-  array( 'label' => 'Size', 'attribute' => 'available_sizes'),
-  array( 'label' => 'Price range', 'attribute' => 'price.value')
+  array( 'label' => 'Categories', 'attribute' => 'categories.lvl0'),
+  array( 'label' => 'Brand', 'attribute' => 'brand_label'),
+  array( 'label' => 'Color', 'attribute' => 'color'),
+  array( 'label' => 'Price', 'attribute' => 'price_new')
 );
 ?>
 
