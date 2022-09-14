@@ -1,22 +1,34 @@
-import recommend from "@algolia/recommend";
 import { trendingItems } from "@algolia/recommend-js";
 import { horizontalSlider } from "@algolia/ui-components-horizontal-slider-js";
+
+import { recommendClient } from "./utils";
 
 import "@algolia/ui-components-horizontal-slider-theme";
 
 /** Trending products */
-const recommendClient = recommend(
-  "XX85YRZZMV",
-  "098f71f9e2267178bdfc08cc986d2999"
-);
-
 trendingItems({
   container: "#trending-products",
   recommendClient,
   indexName: "test_FLAGSHIP_ECOM_recommend",
   maxRecommendations: 10,
-  headerComponent() {
-    return null;
+  headerComponent({ html }) {
+    return html`
+      <div class="flex items-center justify-between mb-4">
+        <h2
+          id="trending-heading"
+          class="text-2xl font-bold tracking-tight text-gray-900"
+        >
+          Trending Products
+        </h2>
+        <a
+          href="{{ url('/search') }}"
+          class="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+        >
+          Browse now
+          <span aria-hidden="true"> →</span>
+        </a>
+      </div>
+    `;
   },
   view: horizontalSlider,
   itemComponent({ item, html }) {

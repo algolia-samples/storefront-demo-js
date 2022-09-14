@@ -79,22 +79,7 @@ $mock = json_decode(Storage::get('mock.json'), true);
 
   <section aria-labelledby="trending-heading">
     <div class="mx-auto max-w-7xl py-24 px-4 sm:px-6 sm:py-32 lg:px-8 lg:pt-32">
-      <div class="md:flex md:items-center md:justify-between">
-        <h2 id="favorites-heading" class="text-2xl font-bold tracking-tight text-gray-900">Trending Products</h2>
-        <a href="{{ url('/search') }}" class="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 md:block">
-          Browse now
-          <span aria-hidden="true"> &rarr;</span>
-        </a>
-      </div>
-
       <div id="trending-products" class="mt-6"></div>
-
-      <div class="mt-8 text-sm md:hidden">
-        <a href="{{ url('/search') }}" class="font-medium text-indigo-600 hover:text-indigo-500">
-          Browse now
-          <span aria-hidden="true"> &rarr;</span>
-        </a>
-      </div>
     </div>
   </section>
 </x-layout>
