@@ -6,6 +6,7 @@ import { createLocalStorageRecentSearchesPlugin } from "@algolia/autocomplete-pl
 import { createQuerySuggestionsPlugin } from "@algolia/autocomplete-plugin-query-suggestions";
 
 import { handleMobileMenu, searchClient } from "./utils";
+import { PRODUCTS_QUERY_SUGGESTIONS_INDEX } from "./utils/constants";
 
 window._ = _;
 
@@ -124,7 +125,7 @@ const recentSearchesPlugin = createLocalStorageRecentSearchesPlugin({
 
 const querySuggestionsPlugin = createQuerySuggestionsPlugin({
   searchClient,
-  indexName: "PROD_pwa_ecom_ui_template_products_query_suggestions",
+  indexName: PRODUCTS_QUERY_SUGGESTIONS_INDEX,
   getSearchParams() {
     return recentSearchesPlugin.data.getAlgoliaSearchParams({
       hitsPerPage: 5,

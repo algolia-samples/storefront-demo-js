@@ -6,6 +6,10 @@
   }
 }
 
+.ais-HierarchicalMenu-item--selected > div > .ais-HierarchicalMenu-link {
+  @apply font-semibold;
+}
+
 .ais-Highlight-highlighted {
   @apply p-0.5 bg-indigo-100;
 }

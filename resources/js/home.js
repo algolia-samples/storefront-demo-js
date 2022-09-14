@@ -1,7 +1,8 @@
 import { trendingItems } from "@algolia/recommend-js";
 import { horizontalSlider } from "@algolia/ui-components-horizontal-slider-js";
 
-import { recommendClient } from "./utils";
+import { formatPrice, recommendClient } from "./utils";
+import { PRODUCTS_INDEX } from "./utils/constants";
 
 import "@algolia/ui-components-horizontal-slider-theme";
 
@@ -9,7 +10,7 @@ import "@algolia/ui-components-horizontal-slider-theme";
 trendingItems({
   container: "#trending-products",
   recommendClient,
-  indexName: "test_FLAGSHIP_ECOM_recommend",
+  indexName: PRODUCTS_INDEX,
   maxRecommendations: 10,
   headerComponent({ html }) {
     return html`
@@ -21,7 +22,7 @@ trendingItems({
           Trending Products
         </h2>
         <a
-          href="{{ url('/search') }}"
+          href="/search"
           class="text-sm font-medium text-indigo-600 hover:text-indigo-500"
         >
           Browse now
@@ -33,23 +34,22 @@ trendingItems({
   view: horizontalSlider,
   itemComponent({ item, html }) {
     return html`<div class="group relative">
-      <div>
-        ${item.image_urls?.length > 0 &&
-        html`<img
-          src="${item.image_urls[0]}"
-          alt="${item.name}"
-          class="w-full h-full object-center object-cover"
-        />`}
+      <div class="flex justify-center h-32">
+        <img
+          src="${item.image1}"
+          alt="${item.title}"
+          class="w-full h-full object-center object-contain"
+        />
       </div>
-      <h3 class="mt-4 text-sm text-gray-700 truncate">
-        <a href="${item.url}">
+      <h3 class="mt-4 text-sm text-gray-700 line-clamp-3">
+        <a href="${item.link_grade_v2.href}">
           <span class="absolute inset-0" />
-          ${item.name}
+          ${item.title}
         </a>
       </h3>
-      <p class="mt-1 text-sm text-gray-500">${item.brand}</p>
-      <p class="mt-1 text-sm font-medium text-gray-900">
-        ${item.price.currency} ${item.price.value}
+      <p class="mt-2 text-sm text-gray-500">${item.brand_label}</p>
+      <p class="mt-2 text-sm font-medium text-gray-900">
+        ${formatPrice(item.price, item.currency)}
       </p>
     </div>`;
   },

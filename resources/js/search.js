@@ -5,6 +5,7 @@ import {
   clearRefinements,
   configure,
   currentRefinements,
+  hierarchicalMenu,
   infiniteHits,
   rangeInput,
   refinementList,
@@ -12,13 +13,18 @@ import {
   sortBy,
 } from "instantsearch.js/es/widgets";
 
-import { handleMobileMenu, searchClient } from "./utils";
+import { formatPrice, handleMobileMenu, searchClient } from "./utils";
+import {
+  PRODUCTS_INDEX,
+  PRODUCTS_PRICE_ASC_INDEX,
+  PRODUCTS_PRICE_DESC_INDEX,
+} from "./utils/constants";
 
 const FILTER_LABEL_MAP = {
-  available_sizes: "Size",
-  brand: "Brand",
-  "color.original_name": "Color",
-  "price.value": "Price",
+  "categories.lvl0": "Categories",
+  brand_label: "Brand",
+  color: "Color",
+  price_new: "Price",
 };
 
 /** Mobile filters menu */
@@ -44,9 +50,9 @@ handleMobileMenu(".mobile-filters-menu");
 /** InstantSearch */
 const search = instantsearch({
   searchClient,
-  indexName: "PROD_pwa_ecom_ui_template_products",
+  indexName: PRODUCTS_INDEX,
   routing: {
-    stateMapping: singleIndex("PROD_pwa_ecom_ui_template_products"),
+    stateMapping: singleIndex(PRODUCTS_INDEX),
   },
 });
 
@@ -63,8 +69,21 @@ const noFiltersLabel = connectCurrentRefinements(
 
 function getFilters(type) {
   return [
+    // Hierarchical menu
+    hierarchicalMenu({
+      container: `#filter-${type}-categorieslvl0`,
+      attributes: ["categories.lvl0", "categories.lvl1"],
+      cssClasses: {
+        root: "pt-6 -ml-4",
+        list: "ml-4 block space-y-4 lg:space-y-3",
+        item: "space-y-4 lg:space-y-3",
+        link: "block text-sm text-gray-600",
+        count:
+          "ml-1.5 rounded bg-gray-200 py-0.5 px-1.5 text-xs font-semibold tabular-nums text-gray-700",
+      },
+    }),
     // Refinement lists
-    ...["brand", "color.original_name", "available_sizes"].map((attribute) =>
+    ...["brand_label", "color"].map((attribute) =>
       refinementList({
         container: `#filter-${type}-${attribute.replace(".", "")}`,
         attribute,
@@ -85,8 +104,10 @@ function getFilters(type) {
           });
         },
         cssClasses: {
-          list: "pt-6 space-y-3",
+          list: "pt-6 space-y-4 lg:space-y-3",
           item: "flex items-center",
+          selectedItem: "font-semibold",
+          label: "cursor-pointer",
           checkbox:
             "h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500",
           labelText: "ml-3 text-sm text-gray-600",
@@ -97,8 +118,8 @@ function getFilters(type) {
     ),
     // Range input
     rangeInput({
-      container: `#filter-${type}-pricevalue`,
-      attribute: "price.value",
+      container: `#filter-${type}-price_new`,
+      attribute: "price_new",
       cssClasses: {
         form: "pt-6 flex space-x-4 justify-between",
         input:
@@ -141,7 +162,7 @@ search.addWidgets([
   clearRefinements({
     container: "#clear-refinements",
     templates: {
-      resetLabel: "Clear all",
+      resetLabel: (_, { html }) => html`Clear all`,
     },
     cssClasses: {
       root: "sm:px-3",
@@ -156,15 +177,15 @@ search.addWidgets([
     items: [
       {
         label: "Sort by relevance",
-        value: "PROD_pwa_ecom_ui_template_products",
+        value: PRODUCTS_INDEX,
       },
       {
         label: "Sort by price (low to high)",
-        value: "PROD_pwa_ecom_ui_template_products_price_asc",
+        value: PRODUCTS_PRICE_ASC_INDEX,
       },
       {
         label: "Sort by price (high to low)",
-        value: "PROD_pwa_ecom_ui_template_products_price_desc",
+        value: PRODUCTS_PRICE_DESC_INDEX,
       },
     ],
     cssClasses: {
@@ -189,31 +210,26 @@ search.addWidgets([
         </div>`;
       },
       item(hit, { html, components }) {
-        return html`<div class="group">
+        return html`<a href="${hit.link_grade_v2.href}" class="group">
           <div
-            class="sm:relative aspect-w-3 aspect-h-4 bg-gray-200 group-hover:opacity-75 sm:aspect-none sm:h-96"
+            class="sm:relative aspect-square bg-white group-hover:opacity-75 sm:aspect-none p-6"
           >
             <img
-              src=${hit.image_urls[0]}
-              alt=${hit.name}
+              src=${hit.image1}
+              alt=${hit.title}
               class="w-full h-full object-center object-cover sm:w-full sm:h-full"
             />
           </div>
           <div class="flex-1 p-4 space-y-2 flex flex-col">
-            <h3 class="text-sm font-medium text-gray-900">
-              <a href="#">
-                <span aria-hidden="true" class="absolute inset-0" />
-                ${components.Highlight({ hit, attribute: "name" })}
-                <p class="text-sm italic text-gray-500">${hit.brand}</p>
-              </a>
+            <h3 class="mt-4 text-sm text-gray-700 line-clamp-3">
+              ${components.Highlight({ hit, attribute: "title" })}
             </h3>
-            <div class="flex-1 flex flex-col justify-end">
-              <p class="text-base font-medium text-gray-900">
-                ${hit.price.currency} ${hit.price.value}
-              </p>
-            </div>
+            <p class="mt-2 text-sm text-gray-500">${hit.brand_label}</p>
+            <p class="mt-2 text-sm font-medium text-gray-900">
+              ${formatPrice(hit.price, hit.currency)}
+            </p>
           </div>
-        </div>`;
+        </a>`;
       },
     },
     cssClasses: {
