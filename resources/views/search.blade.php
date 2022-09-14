@@ -15,7 +15,7 @@ $filters = array(
   <div class="mobile-filters-menu relative z-40 lg:hidden" role="dialog" aria-modal="true">
     <div class="fixed inset-0 bg-black bg-opacity-25"></div>
     <div class="fixed inset-0 z-40 flex">
-      <div class="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-6 shadow-xl">
+      <div class="relative ml-20 flex h-full w-full flex-col overflow-y-auto bg-white py-4 pb-6 shadow-xl">
         <div class="flex items-center justify-between px-4">
           <h2 class="text-lg font-medium text-gray-900">Filters</h2>
           <button type="button"
@@ -59,23 +59,24 @@ $filters = array(
     </div>
   </div>
 
-  <div class="border-b border-gray-200">
+  <div class="border-y border-gray-200">
     <nav aria-label="Breadcrumb" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <ol role="list" class="flex items-center space-x-4 py-4 border-t border-gray-200">
+      <ol role="list" class="flex items-center space-x-4 py-4">
         <li>
           <div class="flex items-center">
-            <a href="{{ url('/search') }}" class="mr-4 text-sm font-medium text-gray-900">Search</a>
+            <a href="{{ url('/') }}" class="mr-4 text-sm font-medium text-gray-900">Home</a>
+            <svg viewBox="0 0 6 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="h-5 w-auto text-gray-300">
+              <path d="M4.878 4.34H3.551L.27 16.532h1.327l3.281-12.19z" fill="currentColor" />
+            </svg>
+          </div>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <a href="{{ url('/search') }}" class="mr-4 text-sm text-gray-900">Search</a>
           </div>
         </li>
       </ol>
     </nav>
-  </div>
-
-  <div class="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
-    <div class="pt-24 pb-10">
-      <h1 class="text-4xl font-bold tracking-tight text-gray-900">Back-to-School Sale</h1>
-      <p class="mt-4 text-base text-gray-500">Better than ever, and up to 30% off!</p>
-    </div>
   </div>
 
   <div class="bg-gray-100 border-t border-gray-200">

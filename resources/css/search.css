@@ -7,7 +7,7 @@
 }
 
 .ais-HierarchicalMenu-item--selected > div > .ais-HierarchicalMenu-link {
-  @apply font-medium text-indigo-600;
+  @apply font-semibold;
 }
 
 .ais-Highlight-highlighted {
