@@ -125,7 +125,7 @@ $filters = array(
 
       <section aria-labelledby="product-heading" class="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3">
         <h2 id="product-heading" class="sr-only">Products</h2>
-        <div id="products"></div>
+        <div id="products">Products results will be here</div>
       </section>
     </div>
   </div>
