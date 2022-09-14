@@ -226,7 +226,7 @@ search.addWidgets([
             </h3>
             <p class="mt-2 text-sm text-gray-500">${hit.brand_label}</p>
             <p class="mt-2 text-sm font-medium text-gray-900">
-              ${formatPrice(hit.price, hit.currency)}
+              ${formatPrice(hit.price_new, hit.currency)}
             </p>
           </div>
         </a>`;

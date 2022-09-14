@@ -49,7 +49,7 @@ trendingItems({
       </h3>
       <p class="mt-2 text-sm text-gray-500">${item.brand_label}</p>
       <p class="mt-2 text-sm font-medium text-gray-900">
-        ${formatPrice(item.price, item.currency)}
+        ${formatPrice(item.price_new, item.currency)}
       </p>
     </div>`;
   },
