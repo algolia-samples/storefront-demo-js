@@ -1,11 +1,21 @@
 /** @type {import('tailwindcss').Config} */
+
+const plugin = require("tailwindcss/plugin");
+
 module.exports = {
-    content: ["./resources/**/*.blade.php", "./storage/app/mock.json"],
+    content: [
+        "./resources/**/*.blade.php",
+        "./resources/js/**/*.js",
+        "./storage/app/mock.json",
+    ],
     theme: {
         extend: {},
     },
     plugins: [
         require("@tailwindcss/forms"),
         require("@tailwindcss/aspect-ratio"),
+        plugin(({ addVariant }) => {
+            addVariant("aria-selected", '[aria-selected="true"] &');
+        }),
     ],
 };

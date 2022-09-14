@@ -1,8 +1,11 @@
 .mobile-filters-menu {
-    @apply hidden;
+  @apply hidden;
 
-    &--visible {
-        @apply flex;
-    }
+  &--visible {
+    @apply flex;
+  }
 }
 
+.ais-Highlight-highlighted {
+  @apply p-0.5 bg-indigo-100;
+}

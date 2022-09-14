@@ -1,412 +1,131 @@
+<?php
+$filters = array(
+  array( 'label' => 'Brand', 'attribute' => 'brand'),
+  array( 'label' => 'Color', 'attribute' => 'color.original_name'),
+  array( 'label' => 'Size', 'attribute' => 'available_sizes'),
+  array( 'label' => 'Price range', 'attribute' => 'price.value')
+);
+?>
+
 <x-layout>
-    @push('scripts')
-        @vite(['resources/css/search.css', 'resources/js/search.js'])
-    @endpush
+  @push('scripts')
+    @vite(['resources/css/search.css', 'resources/js/search.js'])
+  @endpush
 
-    <!--
-      Mobile filter dialog
+  <div class="mobile-filters-menu relative z-40 lg:hidden" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-black bg-opacity-25"></div>
+    <div class="fixed inset-0 z-40 flex">
+      <div class="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-6 shadow-xl">
+        <div class="flex items-center justify-between px-4">
+          <h2 class="text-lg font-medium text-gray-900">Filters</h2>
+          <button type="button"
+            class="mobile-filters-menu-close-trigger -mr-2 flex h-10 w-10 items-center justify-center p-2 text-gray-400 hover:text-gray-500">
+            <span class="sr-only">Close menu</span>
+            <!-- Heroicon name: outline/x-mark -->
+            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
 
-      Off-canvas menu for mobile, show/hide based on off-canvas menu state.
-    -->
-    <div class="mobile-filters-menu relative z-40 lg:hidden" role="dialog" aria-modal="true">
-      <!--
-        Off-canvas menu backdrop, show/hide based on off-canvas menu state.
-
-        Entering: "transition-opacity ease-linear duration-300"
-          From: "opacity-0"
-          To: "opacity-100"
-        Leaving: "transition-opacity ease-linear duration-300"
-          From: "opacity-100"
-          To: "opacity-0"
-      -->
-      <div class="fixed inset-0 bg-black bg-opacity-25"></div>
-
-      <div class="fixed inset-0 z-40 flex">
-        <!--
-          Off-canvas menu, show/hide based on off-canvas menu state.
-
-          Entering: "transition ease-in-out duration-300 transform"
-            From: "translate-x-full"
-            To: "translate-x-0"
-          Leaving: "transition ease-in-out duration-300 transform"
-            From: "translate-x-0"
-            To: "translate-x-full"
-        -->
-        <div class="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-6 shadow-xl">
-          <div class="flex items-center justify-between px-4">
-            <h2 class="text-lg font-medium text-gray-900">Filters</h2>
-            <button type="button" class="mobile-filters-menu-close-trigger -mr-2 flex h-10 w-10 items-center justify-center p-2 text-gray-400 hover:text-gray-500">
-              <span class="sr-only">Close menu</span>
-              <!-- Heroicon name: outline/x-mark -->
-              <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
+        <div class="mt-4">
+          @foreach ($filters as $filter)
+          <div class="border-t border-gray-200 pt-4 pb-4">
+            <fieldset>
+              <legend class="w-full px-2">
+                <button type="button"
+                  class="flex w-full items-center justify-between p-2 text-gray-400 hover:text-gray-500"
+                  aria-controls="filter-section-{{ $loop->index }}" aria-expanded="false">
+                  <span class="text-sm font-medium text-gray-900">{{ $filter['label'] }}</span>
+                  <span class="ml-6 flex h-7 items-center">
+                    <svg class="rotate-0 h-5 w-5 transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                      fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd"
+                        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                        clip-rule="evenodd" />
+                    </svg>
+                  </span>
+                </button>
+              </legend>
+              <div class="px-4 pt-4 pb-2" id="filter-section-{{ $loop->index }}">
+                <div id="filter-mobile-{{ str_replace('.', '', $filter['attribute']) }}"></div>
+              </div>
+            </fieldset>
           </div>
-
-          <!-- Filters -->
-          <form class="mt-4">
-            <div class="border-t border-gray-200 pt-4 pb-4">
-              <fieldset>
-                <legend class="w-full px-2">
-                  <!-- Expand/collapse section button -->
-                  <button type="button" class="flex w-full items-center justify-between p-2 text-gray-400 hover:text-gray-500" aria-controls="filter-section-0" aria-expanded="false">
-                    <span class="text-sm font-medium text-gray-900">Color</span>
-                    <span class="ml-6 flex h-7 items-center">
-                      <!--
-                        Expand/collapse icon, toggle classes based on section open state.
-
-                        Heroicon name: mini/chevron-down
-
-                        Open: "-rotate-180", Closed: "rotate-0"
-                      -->
-                      <svg class="rotate-0 h-5 w-5 transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                      </svg>
-                    </span>
-                  </button>
-                </legend>
-                <div class="px-4 pt-4 pb-2" id="filter-section-0">
-                  <div class="space-y-6">
-                    <div class="flex items-center">
-                      <input id="color-0-mobile" name="color[]" value="white" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="color-0-mobile" class="ml-3 text-sm text-gray-500">White</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="color-1-mobile" name="color[]" value="beige" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="color-1-mobile" class="ml-3 text-sm text-gray-500">Beige</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="color-2-mobile" name="color[]" value="blue" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="color-2-mobile" class="ml-3 text-sm text-gray-500">Blue</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="color-3-mobile" name="color[]" value="brown" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="color-3-mobile" class="ml-3 text-sm text-gray-500">Brown</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="color-4-mobile" name="color[]" value="green" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="color-4-mobile" class="ml-3 text-sm text-gray-500">Green</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="color-5-mobile" name="color[]" value="purple" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="color-5-mobile" class="ml-3 text-sm text-gray-500">Purple</label>
-                    </div>
-                  </div>
-                </div>
-              </fieldset>
-            </div>
-
-            <div class="border-t border-gray-200 pt-4 pb-4">
-              <fieldset>
-                <legend class="w-full px-2">
-                  <!-- Expand/collapse section button -->
-                  <button type="button" class="flex w-full items-center justify-between p-2 text-gray-400 hover:text-gray-500" aria-controls="filter-section-1" aria-expanded="false">
-                    <span class="text-sm font-medium text-gray-900">Category</span>
-                    <span class="ml-6 flex h-7 items-center">
-                      <!--
-                        Expand/collapse icon, toggle classes based on section open state.
-
-                        Heroicon name: mini/chevron-down
-
-                        Open: "-rotate-180", Closed: "rotate-0"
-                      -->
-                      <svg class="rotate-0 h-5 w-5 transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                      </svg>
-                    </span>
-                  </button>
-                </legend>
-                <div class="px-4 pt-4 pb-2" id="filter-section-1">
-                  <div class="space-y-6">
-                    <div class="flex items-center">
-                      <input id="category-0-mobile" name="category[]" value="new-arrivals" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="category-0-mobile" class="ml-3 text-sm text-gray-500">All New Arrivals</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="category-1-mobile" name="category[]" value="tees" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="category-1-mobile" class="ml-3 text-sm text-gray-500">Tees</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="category-2-mobile" name="category[]" value="crewnecks" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="category-2-mobile" class="ml-3 text-sm text-gray-500">Crewnecks</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="category-3-mobile" name="category[]" value="sweatshirts" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="category-3-mobile" class="ml-3 text-sm text-gray-500">Sweatshirts</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="category-4-mobile" name="category[]" value="pants-shorts" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="category-4-mobile" class="ml-3 text-sm text-gray-500">Pants &amp; Shorts</label>
-                    </div>
-                  </div>
-                </div>
-              </fieldset>
-            </div>
-
-            <div class="border-t border-gray-200 pt-4 pb-4">
-              <fieldset>
-                <legend class="w-full px-2">
-                  <!-- Expand/collapse section button -->
-                  <button type="button" class="flex w-full items-center justify-between p-2 text-gray-400 hover:text-gray-500" aria-controls="filter-section-2" aria-expanded="false">
-                    <span class="text-sm font-medium text-gray-900">Sizes</span>
-                    <span class="ml-6 flex h-7 items-center">
-                      <!--
-                        Expand/collapse icon, toggle classes based on section open state.
-
-                        Heroicon name: mini/chevron-down
-
-                        Open: "-rotate-180", Closed: "rotate-0"
-                      -->
-                      <svg class="rotate-0 h-5 w-5 transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                      </svg>
-                    </span>
-                  </button>
-                </legend>
-                <div class="px-4 pt-4 pb-2" id="filter-section-2">
-                  <div class="space-y-6">
-                    <div class="flex items-center">
-                      <input id="sizes-0-mobile" name="sizes[]" value="xs" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="sizes-0-mobile" class="ml-3 text-sm text-gray-500">XS</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="sizes-1-mobile" name="sizes[]" value="s" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="sizes-1-mobile" class="ml-3 text-sm text-gray-500">S</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="sizes-2-mobile" name="sizes[]" value="m" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="sizes-2-mobile" class="ml-3 text-sm text-gray-500">M</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="sizes-3-mobile" name="sizes[]" value="l" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="sizes-3-mobile" class="ml-3 text-sm text-gray-500">L</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="sizes-4-mobile" name="sizes[]" value="xl" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="sizes-4-mobile" class="ml-3 text-sm text-gray-500">XL</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="sizes-5-mobile" name="sizes[]" value="2xl" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="sizes-5-mobile" class="ml-3 text-sm text-gray-500">2XL</label>
-                    </div>
-                  </div>
-                </div>
-              </fieldset>
-            </div>
-          </form>
+          @endforeach
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="border-b border-gray-200">
-      <nav aria-label="Breadcrumb" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <ol role="list" class="flex items-center space-x-4 py-4 border-t border-gray-200">
-          <li>
-            <div class="flex items-center">
-              <a href="#" class="mr-4 text-sm font-medium text-gray-900">Men</a>
-              <svg viewBox="0 0 6 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="h-5 w-auto text-gray-300">
-                <path d="M4.878 4.34H3.551L.27 16.532h1.327l3.281-12.19z" fill="currentColor" />
-              </svg>
-            </div>
-          </li>
+  <div class="border-b border-gray-200">
+    <nav aria-label="Breadcrumb" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <ol role="list" class="flex items-center space-x-4 py-4 border-t border-gray-200">
+        <li>
+          <div class="flex items-center">
+            <a href="{{ url('/search') }}" class="mr-4 text-sm font-medium text-gray-900">Search</a>
+          </div>
+        </li>
+      </ol>
+    </nav>
+  </div>
 
-          <li class="text-sm">
-            <a href="#" aria-current="page" class="font-medium text-gray-500 hover:text-gray-600">New Arrivals</a>
-          </li>
-        </ol>
-      </nav>
+  <div class="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
+    <div class="pt-24 pb-10">
+      <h1 class="text-4xl font-bold tracking-tight text-gray-900">Back-to-School Sale</h1>
+      <p class="mt-4 text-base text-gray-500">Better than ever, and up to 30% off!</p>
     </div>
+  </div>
 
-    <div class="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
-      <div class="border-b border-gray-200 pt-24 pb-10">
-        <h1 class="text-4xl font-bold tracking-tight text-gray-900">New Arrivals</h1>
-        <p class="mt-4 text-base text-gray-500">Checkout out the latest release of Basic Tees, new and improved with four openings!</p>
+  <div class="bg-gray-100 border-t border-gray-200">
+    <div class="sm:flex sm:items-center mx-auto sm:px-6 lg:px-8 max-w-7xl">
+      <div class="sm:order-2 p-3 sm:p-0 sm:flex-shrink-0">
+        <div id="sortby"></div>
       </div>
-
-      <div class="pt-12 pb-24 lg:grid lg:grid-cols-3 lg:gap-x-8 xl:grid-cols-4">
-        <aside>
-          <h2 class="sr-only">Filters</h2>
-
-          <!-- Mobile filter dialog toggle, controls the 'mobileFilterDialogOpen' state. -->
-          <button type="button" class="mobile-filters-menu-open-trigger inline-flex items-center lg:hidden">
-            <span class="text-sm font-medium text-gray-700">Filters</span>
-            <!-- Heroicon name: mini/plus -->
-            <svg class="ml-1 h-5 w-5 flex-shrink-0 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
-            </svg>
-          </button>
-
-          <div class="hidden lg:block">
-            <form class="space-y-10 divide-y divide-gray-200">
-              <div>
-                <fieldset>
-                  <legend class="block text-sm font-medium text-gray-900">Color</legend>
-                  <div class="space-y-3 pt-6">
-                    <div class="flex items-center">
-                      <input id="color-0" name="color[]" value="white" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="color-0" class="ml-3 text-sm text-gray-600">White</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="color-1" name="color[]" value="beige" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="color-1" class="ml-3 text-sm text-gray-600">Beige</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="color-2" name="color[]" value="blue" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="color-2" class="ml-3 text-sm text-gray-600">Blue</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="color-3" name="color[]" value="brown" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="color-3" class="ml-3 text-sm text-gray-600">Brown</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="color-4" name="color[]" value="green" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="color-4" class="ml-3 text-sm text-gray-600">Green</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="color-5" name="color[]" value="purple" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="color-5" class="ml-3 text-sm text-gray-600">Purple</label>
-                    </div>
-                  </div>
-                </fieldset>
-              </div>
-
-              <div class="pt-10">
-                <fieldset>
-                  <legend class="block text-sm font-medium text-gray-900">Category</legend>
-                  <div class="space-y-3 pt-6">
-                    <div class="flex items-center">
-                      <input id="category-0" name="category[]" value="new-arrivals" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="category-0" class="ml-3 text-sm text-gray-600">All New Arrivals</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="category-1" name="category[]" value="tees" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="category-1" class="ml-3 text-sm text-gray-600">Tees</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="category-2" name="category[]" value="crewnecks" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="category-2" class="ml-3 text-sm text-gray-600">Crewnecks</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="category-3" name="category[]" value="sweatshirts" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="category-3" class="ml-3 text-sm text-gray-600">Sweatshirts</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="category-4" name="category[]" value="pants-shorts" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="category-4" class="ml-3 text-sm text-gray-600">Pants &amp; Shorts</label>
-                    </div>
-                  </div>
-                </fieldset>
-              </div>
-
-              <div class="pt-10">
-                <fieldset>
-                  <legend class="block text-sm font-medium text-gray-900">Sizes</legend>
-                  <div class="space-y-3 pt-6">
-                    <div class="flex items-center">
-                      <input id="sizes-0" name="sizes[]" value="xs" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="sizes-0" class="ml-3 text-sm text-gray-600">XS</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="sizes-1" name="sizes[]" value="s" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="sizes-1" class="ml-3 text-sm text-gray-600">S</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="sizes-2" name="sizes[]" value="m" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="sizes-2" class="ml-3 text-sm text-gray-600">M</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="sizes-3" name="sizes[]" value="l" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="sizes-3" class="ml-3 text-sm text-gray-600">L</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="sizes-4" name="sizes[]" value="xl" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="sizes-4" class="ml-3 text-sm text-gray-600">XL</label>
-                    </div>
-
-                    <div class="flex items-center">
-                      <input id="sizes-5" name="sizes[]" value="2xl" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                      <label for="sizes-5" class="ml-3 text-sm text-gray-600">2XL</label>
-                    </div>
-                  </div>
-                </fieldset>
-              </div>
-            </form>
-          </div>
-        </aside>
-
-        <section aria-labelledby="product-heading" class="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3">
-          <h2 id="product-heading" class="sr-only">Products</h2>
-
-          <div class="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:gap-x-8 xl:grid-cols-3">
-            <div class="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white">
-              <div class="aspect-w-3 aspect-h-4 bg-gray-200 group-hover:opacity-75 sm:aspect-none sm:h-96">
-                <img src="https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-01.jpg" alt="Eight shirts arranged on table in black, olive, grey, blue, white, red, mustard, and green." class="h-full w-full object-cover object-center sm:h-full sm:w-full">
-              </div>
-              <div class="flex flex-1 flex-col space-y-2 p-4">
-                <h3 class="text-sm font-medium text-gray-900">
-                  <a href="#">
-                    <span aria-hidden="true" class="absolute inset-0"></span>
-                    Basic Tee 8-Pack
-                  </a>
-                </h3>
-                <p class="text-sm text-gray-500">Get the full lineup of our Basic Tees. Have a fresh shirt all week, and an extra for laundry day.</p>
-                <div class="flex flex-1 flex-col justify-end">
-                  <p class="text-sm italic text-gray-500">8 colors</p>
-                  <p class="text-base font-medium text-gray-900">$256</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white">
-              <div class="aspect-w-3 aspect-h-4 bg-gray-200 group-hover:opacity-75 sm:aspect-none sm:h-96">
-                <img src="https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-02.jpg" alt="Front of plain black t-shirt." class="h-full w-full object-cover object-center sm:h-full sm:w-full">
-              </div>
-              <div class="flex flex-1 flex-col space-y-2 p-4">
-                <h3 class="text-sm font-medium text-gray-900">
-                  <a href="#">
-                    <span aria-hidden="true" class="absolute inset-0"></span>
-                    Basic Tee
-                  </a>
-                </h3>
-                <p class="text-sm text-gray-500">Look like a visionary CEO and wear the same black t-shirt every day.</p>
-                <div class="flex flex-1 flex-col justify-end">
-                  <p class="text-sm italic text-gray-500">Black</p>
-                  <p class="text-base font-medium text-gray-900">$32</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- More products... -->
-          </div>
-        </section>
+      <div class="border-t border-gray-200 sm:border-0 flex-grow sm:flex sm:items-center">
+        <h3 class="text-sm px-7 py-5 sm:p-0 flex-shrink-0 font-medium text-gray-500">
+          Active filters
+        </h3>
+        <div aria-hidden="true" class="hidden h-5 w-px bg-gray-300 sm:ml-4 sm:block"></div>
+        <div id="no-filters-label" class="sm:mt-0.5 sm:h-16 flex items-center"></div>
+        <div id="current-refinements" class="flex-grow"></div>
+        <div id="clear-refinements" class="flex-shrink-0"></div>
       </div>
     </div>
+  </div>
+
+  <div class="mx-w-2xl mx-auto px-4 lg:max-w-7xl lg:px-8">
+    <div class="pt-12 pb-24 lg:grid lg:grid-cols-3 lg:gap-x-8 xl:grid-cols-4">
+      <aside>
+        <h2 class="sr-only">Filters</h2>
+
+        <button type="button" class="mobile-filters-menu-open-trigger inline-flex items-center lg:hidden">
+          <span class="text-sm font-medium text-gray-700">Filters</span>
+          <!-- Heroicon name: mini/plus -->
+          <svg class="ml-1 h-5 w-5 flex-shrink-0 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path
+              d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+          </svg>
+        </button>
+
+        <div class="hidden lg:block divide-y divide-gray-200 space-y-10">
+          @foreach ($filters as $filter)
+            <div class="{{ !$loop->first ? 'pt-10' : '' }}">
+              <fieldset>
+                <legend class="block text-sm font-medium text-gray-900">{{ $filter['label'] }}</legend>
+                <div id="filter-desktop-{{ str_replace('.', '', $filter['attribute']) }}"></div>
+              </fieldset>
+            </div>
+          @endforeach
+        </div>
+      </aside>
+
+      <section aria-labelledby="product-heading" class="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3">
+        <h2 id="product-heading" class="sr-only">Products</h2>
+        <div id="products"></div>
+      </section>
+    </div>
+  </div>
 </x-layout>
