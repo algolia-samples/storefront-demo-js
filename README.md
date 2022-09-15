@@ -2,7 +2,7 @@
 
 # storefront-demo-js
 
-This repository shows how to integrate a search and discovery experience into a Laravel and JavaScript storefront with Algolia.
+This repository shows how to integrate a search and discovery experience into a Laravel and JavaScript storefront with Algolia. It is part of a the « *Integrate a search and discovery experience into a vanilla JavaScript storefront with Algolia* » live coding workshop presented at Algolia DevCon 2022.
 
 ## Requirements
 
